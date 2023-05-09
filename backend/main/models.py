@@ -19,7 +19,7 @@ class CitybikeStations(models.Model):
         return str(self.name_fi)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'citybike_stations'
 
 
@@ -40,5 +40,5 @@ class CitybikeRides(models.Model):
         return str('From {} to {} ({}).'.format(self.dep_station_name, self.ret_station_name, self.dep_time))
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'citybike_rides'
