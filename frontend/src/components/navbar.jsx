@@ -18,7 +18,7 @@ const NavBar = () => {
           <Nav.Link className="nav-link" href="/">
             Bike Stations
           </Nav.Link>
-          <Nav.Link href="/trips">All Rides</Nav.Link>
+          <Nav.Link href="/trips">Bike Trips</Nav.Link>
         </Nav>
       </Container>
     </Navbar>

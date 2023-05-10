@@ -9,7 +9,7 @@ import Card from "react-bootstrap/Card";
 import Pagination from "./pagination";
 
 const Stations = () => {
-  const link = `http://localhost:8000/api/stations`;
+  const link = `http://localhost:8000/api/stationlist`;
   const [searchTxt, setSearchTxt] = useState("");
   const [stations, setStations] = useState([]);
   const [count, setCount] = useState(0);
@@ -25,7 +25,7 @@ const Stations = () => {
 
   const getStations = async () => {
     try {
-      const endpoint = `${link}/?search=${searchTxt}`;
+      const endpoint = `http://localhost:8000/api/stations/?search=${searchTxt}`;
       const response = await axios.get(endpoint);
       setStations(response.data.results);
       setCount(response.data.count);

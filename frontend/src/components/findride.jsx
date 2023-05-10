@@ -13,7 +13,10 @@ const FindRide = (props) => {
     try {
       const response = await axios.get(baseUrl + `stationlist`);
       setStations(response.data);
-      console.log(response.data);
+      setOrigin(response.data[0].id);
+      setDestination(response.data[0].id);
+      console.log("stationlist: ", response.data[0].id);
+      // console.log("first station in list", stations[0].id);
     } catch (error) {
       return error.response;
     }
@@ -29,11 +32,16 @@ const FindRide = (props) => {
       props.setTotalPages(Math.ceil(response.data.count / 16));
       props.setNextURL(response.data.next);
       props.setPrevURL(response.data.previous);
-
+      setOrigin(stations[0].id);
+      setDestination(stations[0].id);
       console.log(response.data);
     } catch (error) {
       return error.response;
     }
+  };
+
+  const resetTrips = () => {
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -41,12 +49,12 @@ const FindRide = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <Container className="mt-5">
+    <Container className="mt-2 left-align">
+      <h5 className="left-align">Search for trips</h5>
       <label className="input-label">From: </label>
       <select
         className="input"
         onChange={(e) => {
-          console.log(e.target.value);
           setOrigin(e.target.value);
         }}
       >
@@ -76,8 +84,11 @@ const FindRide = (props) => {
             );
           })}
       </select>
-      <Button className="" onClick={getTrip}>
+      <Button className="btn btn-success input-button" onClick={getTrip}>
         Get Trips
+      </Button>
+      <Button className="btn btn-warning" onClick={resetTrips}>
+        Reset
       </Button>
     </Container>
   );

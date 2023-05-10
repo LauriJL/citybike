@@ -35,6 +35,14 @@
     margin-right: 5px;
   }
 
+  .input-button {
+    margin-right: 5px;
+  }
+
+  .left-align {
+    text-align: left;
+  }
+
 .station-card {
     border: 1px solid #80489C;
     width: 18rem;

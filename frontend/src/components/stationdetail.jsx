@@ -19,7 +19,7 @@ const StationDetail = () => {
   const [returnTable, setReturnTable] = useState(false);
 
   // URLs
-  const baseURLDetails = "http://127.0.0.1:8000/api/stations";
+  const baseURLDetails = "http://127.0.0.1:8000/api/stationlist";
   const baseURLTrips = "http://127.0.0.1:8000/api/";
   const linkDetails = `${baseURLDetails}/${id}`;
 

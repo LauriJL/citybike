@@ -13,11 +13,11 @@ const Trips = () => {
   // const link = `http://localhost:8000/api/rides`;
   const [link, setLink] = useState(`http://localhost:8000/api/rides`);
   const [trips, setTrips] = useState([]);
-  const [rides, setRides] = useState([]);
   const [count, setCount] = useState(0);
   const [nextURL, setNextURL] = useState("");
   const [prevURL, setPrevURL] = useState("");
   const [totalPages, setTotalPages] = useState(0);
+  const [depStation, setDepStation] = useState("");
 
   useEffect(() => {
     getTrips();
@@ -28,6 +28,8 @@ const Trips = () => {
     try {
       const response = await axios.get(link);
       setTrips(response.data.results);
+      console.log("dep: ", response.data.results[0].dep_station_name);
+      setDepStation(response.data.results[0].dep_station_name);
       setCount(response.data.count);
       setTotalPages(Math.ceil(response.data.count / 16));
       setNextURL(response.data.next);
@@ -38,10 +40,14 @@ const Trips = () => {
   };
 
   return (
-    <Container className="mt-5">
-      <Row>
-        <h4>All Rides (total {count} trips)</h4>
-      </Row>
+    <Container className="mt-4">
+      <h3 className="mb-4 mt-4 ml-2">Bike Trips</h3>
+      {count < 1 && <h4>No trips found.</h4>}
+      {count > 0 && (
+        <Row>
+          <h4>{count} trips</h4>
+        </Row>
+      )}
       <FindRide
         setTrips={setTrips}
         setTotalPages={setTotalPages}
