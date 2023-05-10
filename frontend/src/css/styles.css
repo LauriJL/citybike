@@ -1,0 +1,55 @@
+.address-box {
+    border: solid;
+    border-width: 2px;
+    border-color: #80489C;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.buttons-box {
+    border: solid;
+    border-width: 2px;
+    border-color: #80489C;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+.buttons {
+    width: 50%
+}
+
+.input {
+    width: 25%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #80489C;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+.station-card {
+    border: 1px solid #80489C;
+    width: 18rem;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
+}
+
+.pagination {
+    margin: auto;
+    width: 50%;
+  }
+
+.navbar-color {
+    background-color: #80489C;
+    color: white !important;
+}
+
+.navbar-brand {
+    color: white !important;
+}
+
+.nav-link {
+    color: white !important;
+}

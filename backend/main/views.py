@@ -38,7 +38,7 @@ class RideList(viewsets.ModelViewSet, PageNumberPagination):
         return get_object_or_404(CitybikeRides, id=item)
 
     def get_queryset(self):
-        return CitybikeRides.objects.all().order_by('dep_time')
+        return CitybikeRides.objects.all().order_by('-dep_time')
 
 # Search for rides
 
@@ -84,5 +84,5 @@ class RidesReturn(generics.ListAPIView):
         dep_station_id = self.kwargs['pk']
         ret_station_id = self.kwargs['pk']
         rides = CitybikeRides.objects.filter(
-            dep_station_id=dep_station_id, ret_station_id=ret_station_id)
+            dep_station_id=dep_station_id, ret_station_id=ret_station_id).order_by('-dep_time')
         return rides
