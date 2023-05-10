@@ -4,7 +4,8 @@ import { Container, Row } from "react-bootstrap";
 import axios from "axios";
 
 // Assets
-import TimeConversion from "../functions/timeconversion";
+import DurationConversion from "../functions/durationconversion";
+import TimestampConversion from "../functions/timestampconversion";
 import Pagination from "./pagination";
 
 const Trips = () => {
@@ -41,7 +42,7 @@ const Trips = () => {
   return (
     <Container className="mt-5">
       <Row>
-        <h4>All Rides ({count})</h4>
+        <h4>All Rides (total {count} trips)</h4>
       </Row>
       {/* <input
         type="search"
@@ -76,10 +77,10 @@ const Trips = () => {
                   return (
                     <tr key={item.id}>
                       <td>{item.dep_station_name}</td>
-                      <td>{item.dep_time}</td>
+                      <td>{TimestampConversion(item.dep_time)}</td>
                       <td>{item.ret_station_name}</td>
-                      <td>{item.ret_time}</td>
-                      <td>{TimeConversion(item.duration)}</td>
+                      <td>{TimestampConversion(item.ret_time)}</td>
+                      <td>{DurationConversion(item.duration)}</td>
                       <td>{(item.dist / 1000).toFixed(2)} km</td>
                     </tr>
                   );
