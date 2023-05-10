@@ -1,10 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Container, Form, FormGroup } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import axios from "axios";
 
 const FindRide = (props) => {
-  const [baseUrl, BaseUrl] = useState(`http://localhost:8000/api/`);
+  const baseUrl = `http://localhost:8000/api/`;
   const [stations, setStations] = useState();
   const [origin, setOrigin] = useState(0);
   const [destination, setDestination] = useState(0);
@@ -42,7 +42,9 @@ const FindRide = (props) => {
   }, []);
   return (
     <Container className="mt-5">
+      <label className="input-label">From: </label>
       <select
+        className="input"
         onChange={(e) => {
           console.log(e.target.value);
           setOrigin(e.target.value);
@@ -57,7 +59,9 @@ const FindRide = (props) => {
             );
           })}
       </select>
+      <label className="input-label">To: </label>
       <select
+        className="input"
         onChange={(e) => {
           console.log(e.target.value);
           setDestination(e.target.value);
@@ -72,7 +76,9 @@ const FindRide = (props) => {
             );
           })}
       </select>
-      <button onClick={getTrip}>Get</button>
+      <Button className="" onClick={getTrip}>
+        Get Trips
+      </Button>
     </Container>
   );
 };

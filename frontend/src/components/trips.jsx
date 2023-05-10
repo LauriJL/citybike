@@ -49,24 +49,6 @@ const Trips = () => {
         setPrevURL={setPrevURL}
         setCount={setCount}
       />
-
-      {/* <input
-        type="search"
-        placeholder="From"
-        value={p1}
-        onChange={(e) => setP1(e.target.value)}
-        className="input"
-      />
-      <input
-        type="search"
-        placeholder="To"
-        value={p2}
-        onChange={(e) => setP2(e.target.value)}
-        className="input"
-      />
-      <button onClick={() => getRides()}>Get Rides</button>
-      <p>P1: {p1}</p>
-      <p>P2: {p2}</p> */}
       <Row className="mt-5">
         <div className="row">
           <div className="table-responsive">
