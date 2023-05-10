@@ -7,9 +7,10 @@ app_name = 'main'
 
 router = DefaultRouter()
 
-router.register('stations', StationList, basename='station')
+router.register('stationlist', StationList, basename='station')
 router.register('rides', RideList, basename='ride')
 urlpatterns = [
+    # path('station', StationList.as_view()),
     path('ret_station/<int:pk>/', RidesTo.as_view()),
     path('dep_station/<int:pk>/', RidesFrom.as_view()),
     path('return/<int:pk>/', RidesReturn.as_view()),

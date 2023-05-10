@@ -67,14 +67,6 @@ const Stations = () => {
                 {station.name_se}
               </Card.Subtitle>
             </Card.Body>
-            {/* <Card.Body>
-              <Link
-                to={`station/${station.id}`}
-                className="btn btn-outline-success btn-sm"
-              >
-                Info
-              </Link>
-            </Card.Body> */}
           </Card>
         ))}
       </div>

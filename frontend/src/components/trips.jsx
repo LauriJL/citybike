@@ -7,19 +7,17 @@ import axios from "axios";
 import DurationConversion from "../functions/durationconversion";
 import TimestampConversion from "../functions/timestampconversion";
 import Pagination from "./pagination";
+import FindRide from "./findride";
 
 const Trips = () => {
-  const link = `http://localhost:8000/api/rides`;
+  // const link = `http://localhost:8000/api/rides`;
+  const [link, setLink] = useState(`http://localhost:8000/api/rides`);
   const [trips, setTrips] = useState([]);
   const [rides, setRides] = useState([]);
   const [count, setCount] = useState(0);
   const [nextURL, setNextURL] = useState("");
   const [prevURL, setPrevURL] = useState("");
   const [totalPages, setTotalPages] = useState(0);
-
-  // const [p1, setP1] = useState("");
-  // const [p2, setP2] = useState("");
-  // const [params, setParams] = useState([]);
 
   useEffect(() => {
     getTrips();
@@ -44,6 +42,14 @@ const Trips = () => {
       <Row>
         <h4>All Rides (total {count} trips)</h4>
       </Row>
+      <FindRide
+        setTrips={setTrips}
+        setTotalPages={setTotalPages}
+        setNextURL={setNextURL}
+        setPrevURL={setPrevURL}
+        setCount={setCount}
+      />
+
       {/* <input
         type="search"
         placeholder="From"
@@ -57,8 +63,11 @@ const Trips = () => {
         value={p2}
         onChange={(e) => setP2(e.target.value)}
         className="input"
-      /> */}
-      <Row>
+      />
+      <button onClick={() => getRides()}>Get Rides</button>
+      <p>P1: {p1}</p>
+      <p>P2: {p2}</p> */}
+      <Row className="mt-5">
         <div className="row">
           <div className="table-responsive">
             <table className="table">

@@ -10,6 +10,7 @@ from .serializers import RidesSerializer, StationsSerializer
 
 class StationList(viewsets.ModelViewSet):
     serializer_class = StationsSerializer
+    pagination_class = None
 
     def get_object(self, queryset=None, **kwargs):
         item = self.kwargs.get('pk')
@@ -47,10 +48,10 @@ class RideSearch(generics.ListAPIView):
     serializer_class = RidesSerializer
 
     def get_queryset(self):
-        dep_station = self.kwargs['pk1']
-        ret_station = self.kwargs['pk2']
+        dep_station_id = self.kwargs['pk1']
+        ret_station_id = self.kwargs['pk2']
         rides = CitybikeRides.objects.filter(
-            dep_station=dep_station, ret_station=ret_station).order_by('-dep_time')
+            dep_station_id=dep_station_id, ret_station_id=ret_station_id).order_by('-dep_time')
         return rides
 
 
