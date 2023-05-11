@@ -2,6 +2,7 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import React from "react";
 
 // Assets
@@ -18,7 +19,12 @@ const NavBar = () => {
           <Nav.Link className="nav-link" href="/">
             Bike Stations
           </Nav.Link>
-          <Nav.Link href="/trips">Bike Trips</Nav.Link>
+          <NavDropdown title="Bike Trips" id="basic-nav-dropdown">
+            <NavDropdown.Item href="/findride">
+              Search Bike Trips
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/allrides">All Bike Trips</NavDropdown.Item>
+          </NavDropdown>
         </Nav>
       </Container>
     </Navbar>

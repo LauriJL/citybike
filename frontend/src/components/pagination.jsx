@@ -13,7 +13,7 @@ const Pagination = (props) => {
   const [count, setCount] = useState();
 
   const handlePageClick = async (data) => {
-    let link = props.link + `/?page=${data.selected + 1}`;
+    let link = props.link + `?page=${data.selected + 1}`;
     let response = await (await fetch(link)).json();
     setNextURL(response.next);
     setPrevURL(response.previous);

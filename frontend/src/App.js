@@ -7,6 +7,7 @@ import "./App.css";
 import NavBar from "./components/navbar";
 import Stations from "./components/stations";
 import StationDetail from "./components/stationdetail";
+import FindRide from "./components/findride";
 import Trips from "./components/trips";
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Stations />} />
         <Route exact path="/station/:id" element={<StationDetail />} />
-        <Route path="/trips" element={<Trips />} />
+        <Route path="/findride" element={<FindRide />} />
+        <Route path="/allrides" element={<Trips />} />
       </Routes>
     </div>
   );

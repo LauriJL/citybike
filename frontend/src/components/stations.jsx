@@ -1,7 +1,7 @@
 // Packages
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Card from "react-bootstrap/Card";
 
@@ -9,7 +9,7 @@ import Card from "react-bootstrap/Card";
 import Pagination from "./pagination";
 
 const Stations = () => {
-  const link = `http://localhost:8000/api/stationlist`;
+  const link = `http://localhost:8000/api/stations/`;
   const [searchTxt, setSearchTxt] = useState("");
   const [stations, setStations] = useState([]);
   const [count, setCount] = useState(0);
@@ -32,7 +32,6 @@ const Stations = () => {
       setTotalPages(Math.ceil(response.data.count / 16));
       setNextURL(response.data.next);
       setPrevURL(response.data.previous);
-      console.log(endpoint);
     } catch (error) {
       return error.response;
     }

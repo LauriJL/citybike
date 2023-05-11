@@ -1,22 +1,33 @@
+//Packages
 import React from "react";
 import { useState, useEffect } from "react";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Row } from "react-bootstrap";
 import axios from "axios";
+
+// Assets
+import DurationConversion from "../functions/durationconversion";
+import TimestampConversion from "../functions/timestampconversion";
+import Pagination from "./pagination";
 
 const FindRide = (props) => {
   const baseUrl = `http://localhost:8000/api/`;
   const [stations, setStations] = useState();
-  const [origin, setOrigin] = useState(0);
-  const [destination, setDestination] = useState(0);
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
+  const [trips, setTrips] = useState([]);
+  const [count, setCount] = useState(0);
+  const [nextURL, setNextURL] = useState("");
+  const [prevURL, setPrevURL] = useState("");
+  const [totalPages, setTotalPages] = useState(0);
+  const [link, setLink] = useState(`http://localhost:8000/api/rides`);
+  const [paginationLink, setPaginationLink] = useState();
 
   const getStations = async () => {
     try {
-      const response = await axios.get(baseUrl + `stationlist`);
+      const response = await axios.get(`http://localhost:8000/api/stationlist`);
       setStations(response.data);
       setOrigin(response.data[0].id);
       setDestination(response.data[0].id);
-      console.log("stationlist: ", response.data[0].id);
-      // console.log("first station in list", stations[0].id);
     } catch (error) {
       return error.response;
     }
@@ -24,17 +35,15 @@ const FindRide = (props) => {
 
   const getTrip = async () => {
     try {
-      let link = baseUrl + `rides/${origin}&${destination}`;
-      console.log("link: ", link);
-      const response = await axios.get(link);
-      props.setTrips(response.data.results);
-      props.setCount(response.data.count);
-      props.setTotalPages(Math.ceil(response.data.count / 16));
-      props.setNextURL(response.data.next);
-      props.setPrevURL(response.data.previous);
-      setOrigin(stations[0].id);
-      setDestination(stations[0].id);
-      console.log(response.data);
+      const response = await axios.get(link + `/${origin}&${destination}`);
+      setPaginationLink(link + `/${origin}&${destination}`);
+      setTrips(response.data.results);
+      setCount(response.data.count);
+      setTotalPages(Math.ceil(response.data.count / 16));
+      setNextURL(response.data.next);
+      setPrevURL(response.data.previous);
+      setOrigin(stations[0].name_fi);
+      setDestination(stations[0].name_fi);
     } catch (error) {
       return error.response;
     }
@@ -49,8 +58,8 @@ const FindRide = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <Container className="mt-2 left-align">
-      <h5 className="left-align">Search for trips</h5>
+    <Container className="mt-4">
+      <h3 className="mb-4 mt-4 ml-2">Search Bike Trips</h3>
       <label className="input-label">From: </label>
       <select
         className="input"
@@ -71,7 +80,6 @@ const FindRide = (props) => {
       <select
         className="input"
         onChange={(e) => {
-          console.log(e.target.value);
           setDestination(e.target.value);
         }}
       >
@@ -90,6 +98,54 @@ const FindRide = (props) => {
       <Button className="btn btn-warning" onClick={resetTrips}>
         Reset
       </Button>
+      {count > 0 && (
+        <Row className="mt-5">
+          <div className="row">
+            <h5>
+              <b>{count}</b> trips found.
+            </h5>
+
+            <div className="table-responsive mt-2">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Origin</th>
+                    <th>Departure time</th>
+                    <th>Destination</th>
+                    <th>Arrival time</th>
+                    <th>Duration</th>
+                    <th>Distance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {trips.map((item) => {
+                    return (
+                      <tr key={item.id}>
+                        <td>{item.dep_station_name}</td>
+                        <td>{TimestampConversion(item.dep_time)}</td>
+                        <td>{item.ret_station_name}</td>
+                        <td>{TimestampConversion(item.ret_time)}</td>
+                        <td>{DurationConversion(item.duration)}</td>
+                        <td>{(item.dist / 1000).toFixed(2)} km</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Row>
+      )}
+      {count > 0 && (
+        <Pagination
+          link={paginationLink}
+          count={count}
+          totalPages={totalPages}
+          next={nextURL}
+          previous={prevURL}
+          setData={setTrips}
+        />
+      )}
     </Container>
   );
 };
