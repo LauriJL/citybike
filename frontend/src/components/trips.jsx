@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Table } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 
@@ -44,7 +44,7 @@ const Trips = () => {
         <Row className="mt-5">
           <div className="row">
             <div className="table-responsive">
-              <table className="table">
+              <Table striped bordered hover className="table">
                 <thead>
                   <tr>
                     <th>Origin</th>
@@ -69,7 +69,7 @@ const Trips = () => {
                     );
                   })}
                 </tbody>
-              </table>
+              </Table>
             </div>
           </div>
         </Row>
