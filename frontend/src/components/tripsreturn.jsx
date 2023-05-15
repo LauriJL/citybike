@@ -2,6 +2,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 
 // Assets
@@ -11,6 +12,7 @@ import Pagination from "./pagination";
 
 const TripsReturn = (props) => {
   const link = `${props.baseURL}return/${props.id}`;
+  const [loading, setLoading] = useState(false);
   const [tripsReturn, setTripsReturn] = useState([]);
   const [count, setCount] = useState(0);
   const [nextURL, setNextURL] = useState("");
@@ -21,7 +23,7 @@ const TripsReturn = (props) => {
   const getReturn = async () => {
     try {
       const response = await axios.get(link);
-      console.log("response tripsto: ", response);
+      setLoading(true);
       setTripsReturn(response.data.results);
       setCount(response.data.count);
       setTotalPages(Math.ceil(response.data.count / 16));
@@ -44,34 +46,38 @@ const TripsReturn = (props) => {
           Return trips to {props.name} (total {count} trips)
         </h4>
       </Row>
-      <Row>
-        <div className="row">
-          <div className="table-responsive">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Departure time from {props.name}</th>
-                  <th>Return time at {props.name}</th>
-                  <th>Duration</th>
-                  <th>Distance</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tripsReturn.map((item) => {
-                  return (
-                    <tr key={item.id}>
-                      <td>{TimestampConversion(item.dep_time)}</td>
-                      <td>{TimestampConversion(item.ret_time)}</td>
-                      <td>{DurationConversion(item.duration)}</td>
-                      <td>{(item.dist / 1000).toFixed(2)} km</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+      {loading ? (
+        <Row>
+          <div className="row">
+            <div className="table-responsive">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Departure time from {props.name}</th>
+                    <th>Return time at {props.name}</th>
+                    <th>Duration</th>
+                    <th>Distance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tripsReturn.map((item) => {
+                    return (
+                      <tr key={item.id}>
+                        <td>{TimestampConversion(item.dep_time)}</td>
+                        <td>{TimestampConversion(item.ret_time)}</td>
+                        <td>{DurationConversion(item.duration)}</td>
+                        <td>{(item.dist / 1000).toFixed(2)} km</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </Row>
+        </Row>
+      ) : (
+        <Spinner animation="border" />
+      )}
       {count > 0 && (
         <Pagination
           link={link}

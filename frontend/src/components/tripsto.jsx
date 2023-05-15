@@ -2,6 +2,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 
 // Assets
@@ -11,6 +12,7 @@ import Pagination from "./pagination";
 
 const TripsTo = (props) => {
   const link = `${props.baseURL}ret_station/${props.id}`;
+  const [loading, setLoading] = useState(false);
   const [tripsTo, setTripsTo] = useState([]);
   const [count, setCount] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -21,7 +23,7 @@ const TripsTo = (props) => {
   const getTo = async () => {
     try {
       const response = await axios.get(link);
-      console.log("response tripsto: ", response);
+      setLoading(true);
       setTripsTo(response.data.results);
       setCount(response.data.count);
       setTotalPages(Math.ceil(response.data.count / 16));
@@ -44,36 +46,40 @@ const TripsTo = (props) => {
           Trips To {props.name} (total {count} trips)
         </h4>
       </Row>
-      <Row>
-        <div className="row">
-          <div className="table-responsive">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Departure station {props.id.name_fi}</th>
-                  <th>Departure time from origin</th>
-                  <th>Arrival time at {props.name}</th>
-                  <th>Duration</th>
-                  <th>Distance</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tripsTo.map((item) => {
-                  return (
-                    <tr key={item.id}>
-                      <td>{item.dep_station_name}</td>
-                      <td>{TimestampConversion(item.dep_time)}</td>
-                      <td>{TimestampConversion(item.ret_time)}</td>
-                      <td>{DurationConversion(item.duration)}</td>
-                      <td>{(item.dist / 1000).toFixed(2)} km</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+      {loading ? (
+        <Row>
+          <div className="row">
+            <div className="table-responsive">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Departure station {props.id.name_fi}</th>
+                    <th>Departure time from origin</th>
+                    <th>Arrival time at {props.name}</th>
+                    <th>Duration</th>
+                    <th>Distance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tripsTo.map((item) => {
+                    return (
+                      <tr key={item.id}>
+                        <td>{item.dep_station_name}</td>
+                        <td>{TimestampConversion(item.dep_time)}</td>
+                        <td>{TimestampConversion(item.ret_time)}</td>
+                        <td>{DurationConversion(item.duration)}</td>
+                        <td>{(item.dist / 1000).toFixed(2)} km</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </Row>
+        </Row>
+      ) : (
+        <Spinner animation="border" />
+      )}
       {count > 0 && (
         <Pagination
           link={link}
